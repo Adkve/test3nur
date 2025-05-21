@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Timed Google Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #timer {
+      font-size: 24px;
+      color: red;
+      margin-top: 20px;
+    }
+    iframe {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>NEET Practice Test</h2>
+  <div id="timer">Time Left: 02:00:00</div>
+
+  <iframe id="quizForm" src="https://docs.google.com/forms/d/e/1FAIpQLSdkK28JgTuuMoiwpt-s2ig6b8qIwKNsnm1tS6s2Y7-P_Sj7Xg/viewform?embedded=true" width="640" height="22635" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+
+  <script>
+    let totalSeconds = 7200;
+
+    function updateTimer() {
+      let hours = Math.floor(totalSeconds / 3600);
+      let minutes = Math.floor((totalSeconds % 3600) / 60);
+      let seconds = totalSeconds % 60;
+
+      document.getElementById("timer").textContent = 
+        `Time Left: ${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+      if (totalSeconds <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById("timer").textContent = "Time is up!";
+        alert("⏰ Time is up! Please submit your form now.");
+        // Optional: Hide form to prevent new answers
+        document.getElementById("quizForm").style.display = "none";
+      } else {
+        totalSeconds--;
+      }
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+    updateTimer();
+  </script>
+
+</body>
+</html>
